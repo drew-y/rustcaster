@@ -1,0 +1,12 @@
+[package]
+name = "rustcaster"
+version = "1.0.0"
+authors = ["Drew Youngwerth <drew@youngwerth.com>"]
+edition = "2018"
+
+[dependencies]
+rand = "0.6.5"
+image = "0.21.1"
+lazy_static = "1.3.0"
+indicatif = "0.13.0"
+num_cpus = "1.11.1"
