@@ -1,7 +1,7 @@
 extern crate rustcaster;
 
-use rustcaster::render::render;
-use rustcaster::scene::{RayMarchOpts, Scene};
+use rustcaster::render::render_animation;
+use rustcaster::scene::{AnimatedScene, RayMarchOpts, Scene};
 use rustcaster::vec3::*;
 use std::sync::Arc;
 
@@ -136,27 +136,27 @@ fn ray_march(opts: &RayMarchOpts) -> Vec3 {
     color.mix(vec3(0.6, 0.6, 0.6), vec3(0.03, 0.03, 0.03)) * rim
 }
 
-fn main() {
-    let time = 8.0f64;
+fn scene_fn(time: f64) -> Scene {
+    Scene {
+        nx: 1920,
+        ny: 1080,
+        ns: 10,
+        time,
+        cam_pos: vec3((time / 20.0) * 5.0, 0.0, -5.0),
+        look_at: vec3(0.0, 0.0, 0.0),
+        zoom: 2.0,
+        ray_march_fn: Arc::new(&ray_march),
+    }
+}
 
-    render(
-        Scene {
-            // 4K
-            // nx: 3840,
-            // ny: 2160,
-            // 1080p
-            // nx: 1920,
-            // ny: 1080,
-            // MacBook Pro 15" 2017
-            nx: 4000,
-            ny: 3000,
-            ns: 15,
-            time,
-            cam_pos: vec3((time / 20.0) * 5.0, 0.0, -5.0),
-            look_at: vec3(0.0, 0.0, 0.0),
-            zoom: 2.0,
-            ray_march_fn: Arc::new(&ray_march),
+fn main() {
+    render_animation(
+        AnimatedScene {
+            fps: 30.0,
+            start: 0.0,
+            end: 60.0,
+            scene_fn: &scene_fn,
         },
-        "./manblebulb.png".into(),
+        "mandlebulb_animation".into(),
     );
 }

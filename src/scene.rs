@@ -36,7 +36,5 @@ pub struct AnimatedScene {
     pub fps: f64,
     pub start: f64,
     pub end: f64,
-    pub nx: i32,
-    pub ny: i32,
     pub scene_fn: SceneFn,
 }
